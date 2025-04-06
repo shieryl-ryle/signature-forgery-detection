@@ -1,0 +1,43 @@
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Ignore virtual environments
+venv/
+.env/
+signature_verification_env/
+
+Training/
+Images/
+Streamlit_App/SOURCE/vgg_finetuned_model/vgg_finetuned_model.h5
+Streamlit_App/SOURCE/vgg_finetuned_model/vgg_finetuned_model.keras
+Streamlit_App/SOURCE/vgg_finetuned_model/vgg_harris.keras
+Streamlit_App/SOURCE/yolo_files/best.pt
+
+# Ignore environment variable files
+*.env
+
+# Ignore any log files
+*.log
+
+# Ignore system-specific files
+.DS_Store      # macOS
+Thumbs.db      # Windows
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore compiled code or libraries
+*.so
+*.dylib
+*.dll
+
+# Ignore distribution/build directories
+dist/
+build/
+*.egg-info/
+
+
+
