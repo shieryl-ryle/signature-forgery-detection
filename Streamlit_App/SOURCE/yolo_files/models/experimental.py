@@ -3,6 +3,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.serialization
 
 from SOURCE.yolo_files.models.common import Conv, DWConv
 from SOURCE.yolo_files.utils.google_utils import attempt_download
@@ -117,7 +118,11 @@ def attempt_load(weights, map_location=None, inplace=True):
     model = Ensemble()
     for w in weights if isinstance(weights, list) else [weights]:
         attempt_download(w)
-        ckpt = torch.load(w, map_location=map_location)  # load
+
+        # Removed the problematic line
+        # torch.serialization.add_safe_globals([torch.serialization._reconstruct])
+
+        ckpt = torch.load(w, map_location=map_location, weights_only=False)
         model.append(ckpt['ema' if ckpt.get('ema') else 'model'].float().fuse().eval())  # FP32 model
 
     # Compatibility updates

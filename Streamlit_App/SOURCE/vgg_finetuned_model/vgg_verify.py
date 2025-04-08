@@ -37,7 +37,7 @@ def verify(anchor_image, gan_op):
     # loads the model and removes the last layer is removed
     # vgg_model = tf.keras.models.load_model('SOURCE/vgg_finetuned_model')
 
-    vgg_model = tf.keras.models.load_model('D:/codes/signature-forgery-detection/Streamlit_App/SOURCE/vgg_finetuned_model/vgg_harris.keras')
+    vgg_model = tf.keras.models.load_model('C:/Users/tendi/OneDrive/Desktop/signature-forgery-detection/Streamlit_App/SOURCE/vgg_finetuned_model/vgg_finetuned_model.keras')
 
     # model = tf.keras.models.load_model('SOURCE/vgg_finetuned_model')
     # model.save('SOURCE/vgg_finetuned_model.h5')
@@ -50,7 +50,7 @@ def verify(anchor_image, gan_op):
     # anchor image is resized to 256x256 to match outputs from gan.
     make_square(anchor_image)
     anchor_image_feature = extract_features(feature_extractor, anchor_image)
-    test_images = [gan_op + image for image in os.listdir(gan_op) if image[2:6]=='fake']
+    test_images = [gan_op + image for image in os.listdir(gan_op)]
     for image in test_images:
         test_image_feature = extract_features(feature_extractor, image)
         cosine_similarity = cosine_similarity_fn(anchor_image_feature, test_image_feature)

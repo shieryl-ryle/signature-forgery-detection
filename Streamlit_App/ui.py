@@ -41,23 +41,28 @@ def signature_verify(selection):
         st.error(f"Anchor image not found at: {anchor_image}")
         return
     feature_set = vgg_verify.verify(anchor_image, GAN_OP_RESIZED)
-    for image, score in feature_set:
+    if feature_set:  # make sure there's at least one result
+        image, score = feature_set[0]
+
         columns = st.columns(3)
+
         # Display Original Signature
         with columns[0]:
             st.image(anchor_image, caption="Original Signature", use_container_width=True)
+
         # Display Detected Signature
         with columns[1]:
             st.image(image, caption="Detected Signature", use_container_width=True)
+
         # Display Score with Color and Style
         with columns[2]:
             st.subheader("Result:")
+            st.write(f"Similarity Score: {score * 100:.0f}%")
             if score >= 0.80:
-                st.write(f"Similarity Score: {score * 100:.0f}%")
                 st.success('The Signature is Genuine')
             else:
-                st.write(f"Similarity Score: {score * 100:.0f}%")
                 st.error('The Signature is Forged')
+
 
 def signature_cleaning(selection, yolo_op):
     ''' Performs signature cleaning and displays the cleaned signatures '''
@@ -133,7 +138,6 @@ def select_signature():
         st.warning("Please select a valid signature to proceed.")
         return None
 
-
 def main():
     session_state = get_session(
         signature_selection='',
@@ -143,6 +147,7 @@ def main():
         clean_button=False,
         verify_button=False,
     )
+
 
     st.markdown("""
         <div style="border: 2px solid #808080; padding: 10px; border-radius: 5px; margin-bottom: 60px; background-color: #262730; border-radius: 10px;">
